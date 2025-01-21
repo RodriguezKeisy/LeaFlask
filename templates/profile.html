@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="profile-container">
+            <h1 class="text-center">User Profile</h1>
+            <div class="profile-info mt-4">
+                <p><strong>Name:</strong> {{ current_user.username }}</p>
+            </div>
+            <div class="upload-section mt-4">
+                <h2>Upload Image</h2>
+                <form action="/upload" method="post" enctype="multipart/form-data" class="form-inline">
+                    <div class="form-group mb-2">
+                        <input type="file" name="image" accept="image/*" class="form-control-file">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2 ml-2">Upload</button>
+                </form>
+            </div>
+            
+            {% if plant_name %}
+            <div class="result mt-4">
+                <h2>Classificato come:</h2>
+                <p><strong>{{ plant_name }}</strong></p>
+                <img src="{{ image_path }}" alt="Uploaded Leaf" class="img-fluid" width="300">
+            </div>
+            {% endif %}
+            
+            <div class="uploaded-images mt-4">
+                <h2>Uploaded Images</h2>
+                <div class="row">
+                    {% for image in leaf_images %}
+                    <div class="col-md-4">
+                        <img src="{{ url_for('static', filename=image.image_url) }}" alt="Leaf Image" width="200" class="img-thumbnail">
+                        <p>Classificato come: {{ image.classification_result }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
